@@ -23,13 +23,19 @@
                 <p class="mb-5">Make your app management easy and fun!</p>
 
                 <form id="formAuthentication" class="mb-5" action="/register" method="POST">
+                    @csrf
                     <div class="form-floating form-floating-outline mb-5">
-                        <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" autofocus />
-                        <label for="username">Username</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter your username" autofocus />
+                        <label for="name">Name</label>
+                    </div>
                     </div>
                     <div class="form-floating form-floating-outline mb-5">
                         <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" />
                         <label for="email">Email</label>
+                    </div>
+                    <div class="form-floating form-floating-outline mb-5">
+                        <input type="text" class="form-control" id="cpfcnpj" name="cpfcnpj" placeholder="Enter your cpfcnpj" />
+                        <label for="cpfcnpj">CPF ou CNPJ</label>
                     </div>
                     <div class="mb-5 form-password-toggle">
                         <div class="input-group input-group-merge">
