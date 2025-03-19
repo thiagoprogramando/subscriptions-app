@@ -14,12 +14,11 @@ Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login']);
 
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
-Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
+Route::post('register', [RegisterController::class, 'store'])->name('register.store');
 
 Route::get('forgot-password', [ForgotController::class, 'showLinkRequestForm'])->name('password.request');
 Route::post('forgot-password', [ForgotController::class, 'sendResetLinkEmail'])->name('password.email');
 
-Route::get('/home', function () {
-    return view('home');
-})->name('home');
-
+Route::middleware('auth')->get('/app', function () {
+    return view('app');  
+})->name('app');

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Access;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -16,15 +18,28 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
+            'email' => 'required|string',
+            'password' => 'required|string',
         ]);
 
-        if (Auth::attempt($request->only('email', 'password'))) {
-            return redirect()->route('home')->with('success', 'Login realizado com sucesso!');
+        // Verificar se o usuário existe (pelo email ou nome de usuário)
+        $user = User::where('email', $request->email)
+                    ->orWhere('name', $request->email)
+                    ->first();
+
+        if (!$user) {
+            return back()->withErrors(['email' => 'O usuário com esse email ou nome de usuário não existe.']);
         }
 
-        return back()->withErrors(['email' => 'Credenciais inválidas.']);
+        // Verificar a senha
+        if (!Hash::check($request->password, $user->password)) {
+            return back()->withErrors(['password' => 'Senha incorreta.']);
+        }
+
+        // Autenticar o usuário
+        Auth::login($user);
+
+        return redirect()->route('app')->with('success', 'Login realizado com sucesso!');
     }
 
     public function logout()

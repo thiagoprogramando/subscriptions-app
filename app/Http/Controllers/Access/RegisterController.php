@@ -16,29 +16,40 @@ class RegisterController extends Controller
     }
 
     public function store(Request $request)
-{
-    dd($request->all());
-
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'cpfcnpj' => 'required|string|max:14|unique:users',
-            'password' => 'required|string|min:4|confirmed',
-            'terms' => 'required|accepted', 
+    {
+        $request->merge([
+            'terms'   => $request->has('terms') ? '1' : '0',
+            'cpfcnpj' => preg_replace('/\D/', '', $request->cpfcnpj),
         ]);
 
+        $request->validate([
+            'name'    => 'required|string|max:255',
+            'email'   => 'required|email|max:255|unique:users,email',
+            'cpfcnpj' => 'required|unique:users,cpfcnpj',
+            'password'=> 'required|string|min:4',
+        ]);
+
+        $existingUser = User::where('email', $request->email)
+                            ->orWhere('cpfcnpj', $request->cpfcnpj)
+                            ->first();
+
+        if ($existingUser) {
+            return back()->withErrors(['email' => 'Já existe um cadastro com este e-mail ou CPF/CNPJ.'])->withInput();
+        }
+
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'cpfcnpj' => $request->cpfcnpj,
+            'name'     => $request->name,
+            'email'    => $request->email,
+            'cpfcnpj'  => $request->cpfcnpj,
             'password' => Hash::make($request->password),
-            'type' => 1,
+            'type'     => 1,
         ]);
 
         Auth::login($user);
 
-        return redirect()->route('home')->with('success', 'Cadastro realizado com sucesso!');
+        return redirect()->route('app')->with('success', 'Cadastro realizado com sucesso!');
     }
 }
+
 
 
