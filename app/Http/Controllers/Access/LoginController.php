@@ -22,7 +22,6 @@ class LoginController extends Controller
             'password' => 'required|string',
         ]);
 
-        // Verificar se o usuário existe (pelo email ou nome de usuário)
         $user = User::where('email', $request->email)
                     ->orWhere('name', $request->email)
                     ->first();
@@ -30,13 +29,10 @@ class LoginController extends Controller
         if (!$user) {
             return back()->withErrors(['email' => 'O usuário com esse email ou nome de usuário não existe.']);
         }
-
-        // Verificar a senha
         if (!Hash::check($request->password, $user->password)) {
             return back()->withErrors(['password' => 'Senha incorreta.']);
         }
 
-        // Autenticar o usuário
         Auth::login($user);
 
         return redirect()->route('app')->with('success', 'Login realizado com sucesso!');

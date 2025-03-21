@@ -5,7 +5,6 @@ use App\Http\Controllers\Access\LoginController;
 use App\Http\Controllers\Access\RegisterController;
 use App\Http\Controllers\Access\ForgotController;
 
-
 Route::get('/', function () {
     return view('login');
 });
@@ -20,5 +19,5 @@ Route::get('forgot-password', [ForgotController::class, 'showLinkRequestForm'])-
 Route::post('forgot-password', [ForgotController::class, 'sendResetLinkEmail'])->name('password.email');
 
 Route::middleware('auth')->get('/app', function () {
-    return view('app');  
+    return view('app');
 })->name('app');

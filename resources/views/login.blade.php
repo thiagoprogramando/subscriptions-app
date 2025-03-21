@@ -57,7 +57,7 @@
                             <input class="form-check-input" type="checkbox" id="remember-me" />
                             <label class="form-check-label" for="remember-me"> Remember Me </label>
                         </div>
-                        <a href="{{ route('password.request') }}" class="float-end mb-1 mt-2">
+                        <a href="{{ route('app') }}" class="float-end mb-1 mt-2"> 
                             <span>Forgot Password?</span>
                         </a>
                     </div>
