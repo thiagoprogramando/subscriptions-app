@@ -21,8 +21,13 @@
             <div class="w-px-400 mx-auto pt-5 pt-lg-0">
                 <h4 class="mb-1">Adventure starts here 🚀</h4>
                 <p class="mb-5">Make your app management easy and fun!</p>
+                @if (session('error'))
+                    <div class="alert alert-outline-danger" role="alert">
+                        {{ session('error') }}
+                    </div>
+                @endif
 
-                <form id="formAuthentication" class="mb-5" action="{{ route('register.store') }}" method="POST">
+                <form id="formAuthentication" class="mb-5" action="{{ route('registrer') }}" method="POST">
                     @csrf
                     <div class="form-floating form-floating-outline mb-5">
                         <input type="text" class="form-control" id="name" name="name" placeholder="Enter your username" autofocus />
@@ -69,7 +74,7 @@
 
                 <p class="text-center">
                     <span>Already have an account?</span>
-                    <a href="/login">Sign in instead</a>
+                    <a href="{{ route('login') }}">Sign in instead</a>
                 </p>
             </div>
         </div>

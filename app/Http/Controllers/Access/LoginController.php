@@ -8,38 +8,32 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-class LoginController extends Controller
-{
-    public function showLoginForm()
-    {
+class LoginController extends Controller {
+
+    public function index() {
         return view('login');
     }
 
-    public function login(Request $request)
-    {
+    public function logon(Request $request) {
+
         $request->validate([
-            'email' => 'required|string',
-            'password' => 'required|string',
+            'email'    => 'required|email',
+            'password' => 'required',
+        ], [
+            'email.required'    => 'É necessário informar um Email!',
+            'password.required' => 'É necessário informar uma Senha!',
         ]);
 
-        $user = User::where('email', $request->email)
-                    ->orWhere('name', $request->email)
-                    ->first();
-
-        if (!$user) {
-            return back()->withErrors(['email' => 'O usuário com esse email ou nome de usuário não existe.']);
+        $credentials = $request->only(['email', 'password']);
+        if (Auth::attempt($credentials)) {
+            return redirect()->route('app');
+        } else {
+            return redirect()->back()->withInput($request->only('email'))->with('error', 'Credenciais inválidas!');
         }
-        if (!Hash::check($request->password, $user->password)) {
-            return back()->withErrors(['password' => 'Senha incorreta.']);
-        }
-
-        Auth::login($user);
-
-        return redirect()->route('app')->with('success', 'Login realizado com sucesso!');
     }
 
-    public function logout()
-    {
+    public function logout() {
+        
         Auth::logout();
         return redirect()->route('login');
     }

@@ -22,17 +22,17 @@
             <div class="w-px-400 mx-auto pt-5 pt-lg-0">
                 <h4 class="mb-1">Bem-vindo a Materialize! 👋</h4>
                 <p class="mb-5">Please sign-in to your account and start the adventure</p>
+                @if (session('error'))
+                    <div class="alert alert-outline-danger" role="alert">
+                        {{ session('error') }}
+                    </div>
+                @endif
 
-                <form id="formAuthentication" class="mb-5" action="{{ route('login') }}" method="POST">
+                <form id="formAuthentication" class="mb-5" action="{{ route('logon') }}" method="POST">
                     @csrf
                     <div class="form-floating form-floating-outline mb-5">
                         <input type="text" class="form-control" id="email" name="email" placeholder="Enter your email or username" autofocus />
                         <label for="email">Email or Username</label>
-                        @if ($errors->has('email'))
-                        <div class="text-danger">
-                            {{ $errors->first('email') }}
-                        </div>
-                        @endif
                     </div>
 
                     <div class="mb-5">
@@ -41,11 +41,6 @@
                                 <div class="form-floating form-floating-outline">
                                     <input type="password" id="password" class="form-control" name="password" placeholder="••••••••" aria-describedby="password" />
                                     <label for="password">Password</label>
-                                    @if ($errors->has('password'))
-                                    <div class="text-danger">
-                                        {{ $errors->first('password') }}
-                                    </div>
-                                    @endif
                                 </div>
                                 <span class="input-group-text cursor-pointer"><i class="ri-eye-off-line"></i></span>
                             </div>
@@ -57,7 +52,7 @@
                             <input class="form-check-input" type="checkbox" id="remember-me" />
                             <label class="form-check-label" for="remember-me"> Remember Me </label>
                         </div>
-                        <a href="{{ route('app') }}" class="float-end mb-1 mt-2"> 
+                        <a href="#" class="float-end mb-1 mt-2"> 
                             <span>Forgot Password?</span>
                         </a>
                     </div>

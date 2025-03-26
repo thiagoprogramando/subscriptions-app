@@ -8,15 +8,14 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
-class RegisterController extends Controller
-{
-    public function showRegistrationForm()
-    {
+class RegisterController extends Controller {
+
+    public function index() {
         return view('register');
     }
 
-    public function store(Request $request)
-    {
+    public function registrer(Request $request) {
+        
         $request->merge([
             'terms'   => $request->has('terms') ? '1' : '0',
             'cpfcnpj' => preg_replace('/\D/', '', $request->cpfcnpj),
@@ -27,6 +26,12 @@ class RegisterController extends Controller
             'email'   => 'required|email|max:255|unique:users,email',
             'cpfcnpj' => 'required|unique:users,cpfcnpj',
             'password'=> 'required|string|min:4',
+        ], [
+            'name.required'     => 'É necessário informar o seu Nome!',
+            'email.unique'      => 'Esse email já está em uso!',
+            'cpfcnpj.unique'    => 'Esse CPF ou CNPJ já está em uso!',
+            'password.required' => 'É necessário informar uma Senha!',
+            'password.min'      => 'Sua senha deve ter no mínimo 4 caracteres!',
         ]);
 
         $existingUser = User::where('email', $request->email)
@@ -37,17 +42,21 @@ class RegisterController extends Controller
             return back()->withErrors(['email' => 'Já existe um cadastro com este e-mail ou CPF/CNPJ.'])->withInput();
         }
 
-        $user = User::create([
-            'name'     => $request->name,
-            'email'    => $request->email,
-            'cpfcnpj'  => $request->cpfcnpj,
-            'password' => Hash::make($request->password),
-            'type'     => 1,
-        ]);
+        $user = new User();
+        $user->name     = $request->name;
+        $user->email    = $request->email;
+        $user->cpfcnpj  = $request->cpfcnpj;
+        $user->password = Hash::make($request->password);
+        $user->type     = 1;
+        if ($user->save()) {
+            if (Auth::attempt($request->only(['email', 'password']))) {
+                return redirect()->route('app');
+            } else {
+                return redirect()->route('login')->with('success', 'Bem-vindo(a)! Faça Login para acessar!');
+            }
+        }
 
-        Auth::login($user);
-
-        return redirect()->route('app')->with('success', 'Cadastro realizado com sucesso!');
+        return redirect()->back()->with('error', 'Não foi possível finalizar o cadastro, verifique os dados e tente novamente!');
     }
 }
 

@@ -4,20 +4,15 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Access\LoginController;
 use App\Http\Controllers\Access\RegisterController;
 use App\Http\Controllers\Access\ForgotController;
+use App\Http\Controllers\AppController;
 
-Route::get('/', function () {
-    return view('login');
+Route::get('/', [LoginController::class, 'index'])->name('login');
+Route::post('logon', [LoginController::class, 'logon'])->name('logon');
+
+Route::get('/register', [RegisterController::class, 'index'])->name('register');
+Route::post('registrer', [RegisterController::class, 'registrer'])->name('registrer');
+
+Route::middleware(['auth'])->group(function () {
+    
+    Route::get('/app', [AppController::class, 'index'])->name('app');
 });
-
-Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('login', [LoginController::class, 'login']);
-
-Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
-Route::post('register', [RegisterController::class, 'store'])->name('register.store');
-
-Route::get('forgot-password', [ForgotController::class, 'showLinkRequestForm'])->name('password.request');
-Route::post('forgot-password', [ForgotController::class, 'sendResetLinkEmail'])->name('password.email');
-
-Route::middleware('auth')->get('/app', function () {
-    return view('app');
-})->name('app');
