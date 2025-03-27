@@ -14,7 +14,7 @@ class LoginController extends Controller {
         return view('login');
     }
 
-    public function logon(Request $request) {
+    public function login(Request $request) {
 
         $request->validate([
             'email'    => 'required|email',
@@ -33,7 +33,7 @@ class LoginController extends Controller {
     }
 
     public function logout() {
-        
+
         Auth::logout();
         return redirect()->route('login');
     }
