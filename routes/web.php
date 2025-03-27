@@ -7,8 +7,8 @@ use App\Http\Controllers\Access\ForgotController;
 use App\Http\Controllers\AppController;
 
 
-Route::get('/', [LoginController::class, 'index'])->name('login');
-Route::post('logon', [LoginController::class, 'logon'])->name('logon');
+Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::post('login', [LoginController::class, 'login'])->name('login');
 
 Route::get('/register', [RegisterController::class, 'index'])->name('register');
 Route::post('registrer', [RegisterController::class, 'registrer'])->name('registrer');

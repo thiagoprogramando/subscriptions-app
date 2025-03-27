@@ -1,7 +1,7 @@
 @extends('layout')
 @section('content')
 <div class="authentication-wrapper authentication-cover">
-    <a href="{{ url('/') }}" class="auth-cover-brand d-flex align-items-center gap-2">
+    <a href="{{ url('/login') }}" class="auth-cover-brand d-flex align-items-center gap-2">
         <span class="app-brand-logo demo">
             <span class="app-logo" style="color: var(--bs-primary)">
                 <svg width="268" height="150" viewBox="0 0 38 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -28,7 +28,7 @@
                     </div>
                 @endif
 
-                <form id="formAuthentication" class="mb-5" action="{{ route('logon') }}" method="POST">
+                <form id="formAuthentication" class="mb-5" action="{{ route('login') }}" method="POST">
                     @csrf
                     <div class="form-floating form-floating-outline mb-5">
                         <input type="text" class="form-control" id="email" name="email" placeholder="Enter your email or username" autofocus />
@@ -52,7 +52,7 @@
                             <input class="form-check-input" type="checkbox" id="remember-me" />
                             <label class="form-check-label" for="remember-me"> Remember Me </label>
                         </div>
-                        <a href="#" class="float-end mb-1 mt-2"> 
+                        <a href="#" class="float-end mb-1 mt-2">
                             <span>Forgot Password?</span>
                         </a>
                     </div>
