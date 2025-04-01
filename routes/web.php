@@ -22,5 +22,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/user', [ProfileController::class, 'update'])->name('user.update');
 
+    Route::post('/profile/update-photo', [ProfileController::class, 'updatePhoto'])->name('profile.update-photo');
 });
 
