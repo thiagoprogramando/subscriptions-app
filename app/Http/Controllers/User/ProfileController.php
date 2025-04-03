@@ -10,36 +10,6 @@ use App\Models\User;
 
 class ProfileController extends Controller
 {
-    public function update(Request $request)
-    {
-
-        if (!Auth::check()) {
-            return response()->json(['error' => 'Usuário não autenticado'], 401);
-        }
-
-        $user = Auth::user();
-
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'status' => 'nullable|string|max:255',
-            'phone' => 'nullable|string|max:20',
-            'email' => 'required|email|max:255|unique:users,email,' . $user->id
-        ]);
-
-        $user->fill([
-            'name' => $request->name,
-            'email' => $request->email,
-            'cpfcnpj' => $request->cpfcnpj,
-            'password' => bcrypt($request->password),
-            'type' => $request->type,
-        ])->save();
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Informações atualizadas com sucesso!',
-            'user' => $user
-        ]);
-    }
 
     public function updatePhoto(Request $request)
     {
@@ -67,6 +37,34 @@ class ProfileController extends Controller
             'message' => 'Foto do perfil atualizada com sucesso!',
             'image_url' => asset('storage/' . $imagePath)
         ]);
+    }
+
+    public function update(Request $request)
+    {
+        try {
+            $user = Auth::user();
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|unique:users,email,' . $user->id,
+                'cpfcnpj' => 'nullable|string|max:20',
+            ]);
+
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->cpfcnpj = $request->cpfcnpj;
+            $user->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Perfil atualizado com sucesso!',
+                'user' => $user
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Erro ao atualizar o perfil: ' . $e->getMessage()
+            ], 500);
+        }
     }
 }
 
