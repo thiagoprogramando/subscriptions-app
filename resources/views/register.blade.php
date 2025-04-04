@@ -1,18 +1,8 @@
 @extends('layout')
 @section('content')
-
 <div class="authentication-wrapper authentication-cover">
-    <a href="/" class="auth-cover-brand d-flex align-items-center gap-2">
-        <span class="app-brand-logo demo">
-            <svg width="268" height="150" viewBox="0 0 38 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M30.0944 2.22569C29.0511 0.444187 26.7508 -0.172113 24.9566 0.849138C23.1623 1.87039 22.5536 4.14247 23.5969 5.92397L30.5368 17.7743C31.5801 19.5558 33.8804 20.1721 35.6746 19.1509C37.4689 18.1296 38.0776 15.8575 37.0343 14.076L30.0944 2.22569Z" fill="currentColor" />
-            </svg>
-        </span>
-        <span class="app-brand-text demo text-heading fw-semibold">Materialize</span>
-    </a>
-
     <div class="authentication-inner row m-0">
-        <div class="d-none d-lg-flex col-lg-7 col-xl-8 align-items-center justify-content-center p-12 pb-2">
+        <div class="d-none d-lg-flex col-lg-7 col-xl-8 align-items-center justify-content-center p-12 pb-2" style="margin-top: -150px;">
             <img src="{{ asset('template/img/illustrations/auth-register-illustration-light.png') }}" class="auth-cover-illustration w-100" alt="auth-illustration" />
             <img src="{{ asset('template/img/illustrations/auth-cover-register-mask-light.png') }}" class="authentication-image" alt="mask" />
         </div>
