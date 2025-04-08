@@ -129,7 +129,8 @@
                     <li class="nav-item navbar-dropdown dropdown-user dropdown">
                         <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                             <div class="avatar avatar-online">
-                                <img src="{{ asset('template/img/avatars/1.png') }}" alt class="rounded-circle" />
+
+                            <img src="{{ Auth::user()->profile_image ? asset('storage/' . Auth::user()->profile_image) . '?' . time() : asset('template/img/avatars/1.png') }}" alt="Avatar" class="rounded-circle" />
                             </div>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
@@ -138,7 +139,7 @@
                                     <div class="d-flex">
                                         <div class="flex-shrink-0 me-2">
                                             <div class="avatar avatar-online">
-                                            <img src="{{ Auth::user()->profile_picture ? asset('storage/' . Auth::user()->profile_picture) : asset('template/img/avatars/1.png') }}" alt="Avatar" class="rounded-circle" />
+                                            <img src="{{ Auth::user()->profile_image ? asset('storage/' . Auth::user()->profile_image) . '?' . time() : asset('template/img/avatars/1.png') }}" alt="Avatar" class="rounded-circle" />
                                             </div>
                                         </div>
                                         <div class="flex-grow-1">
@@ -217,7 +218,12 @@
         </div>
     </footer>
 
-
+    <style>
+    #layout-menu.layout-menu-horizontal {
+        position: relative;
+        z-index: 10;
+    }
+    </style>
 </body>
 
 <script src="{{ asset('template/vendor/libs/jquery/jquery.js') }}"></script>

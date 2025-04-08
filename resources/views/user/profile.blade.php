@@ -13,10 +13,11 @@
                     <div class="flex-shrink-0 mt-n2 mx-sm-0 mx-auto position-relative">
                         <img id="profile-img"
                             src="{{ asset(Auth::user()->profile_image ? 'storage/' . Auth::user()->profile_image : 'template/img/avatars/1.png') }}"
+                            data-fallback="{{ asset('template/img/avatars/1.png') }}"
                             alt="user image"
                             class="d-block h-auto ms-0 ms-sm-5 rounded-4 user-profile-img"
                             style="width: 200px; height: 200px; object-fit: cover;"
-                            onerror="this.onerror=null; this.src='{{ asset('template/img/avatars/1.png') }}'" ; />
+                            onerror="this.onerror=null; this.src=this.dataset.fallback;" />
 
                         <button type="button" class="btn btn-secondary btn-sm rounded-circle position-absolute"
                             id="change-photo-btn"
@@ -29,7 +30,8 @@
 
                     <div id="preview-modal" class="modal"
                         style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-                                background: rgba(0, 0, 0, 0.5); display: flex; align-items: center; justify-content: center;">
+                        background: rgba(0, 0, 0, 0.5); align-items: center; justify-content: center;">
+
                         <div class="modal-content"
                             style="background: white; padding: 20px; border-radius: 10px; text-align: center; width: 360px;">
                             <h5>Pré-visualização</h5>
@@ -305,4 +307,4 @@
                 });
         });
     </script>
-@endsection
+    @endsection

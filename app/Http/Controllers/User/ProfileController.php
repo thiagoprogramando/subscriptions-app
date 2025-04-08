@@ -16,7 +16,7 @@ class ProfileController extends Controller
         if (!Auth::check()) {
             return response()->json(['error' => 'Usuário não autenticado'], 401);
         }
-
+        /** @var \App\Models\User $user */
         $user = Auth::user();
 
         $request->validate([
@@ -52,6 +52,7 @@ class ProfileController extends Controller
             $user->name = $request->name;
             $user->email = $request->email;
             $user->cpfcnpj = $request->cpfcnpj;
+            /** @var \App\Models\User $user */
             $user->save();
 
             return response()->json([

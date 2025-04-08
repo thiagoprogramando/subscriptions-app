@@ -51,7 +51,7 @@
 
 <body>
     <header class="container py-4">
-        <a href="{{ url('/') }}" class="d-flex align-items-center gap-2">
+        <a href="{{ url('/login') }}" class="d-flex align-items-center gap-2">
             <span class="app-brand-logo demo">
                 <<span class="app-logo" style="color: var(--bs-primary)">
                     <svg width="268" height="150" viewBox="0 0 38 20" fill="none" xmlns="http://www.w3.org/2000/svg">
