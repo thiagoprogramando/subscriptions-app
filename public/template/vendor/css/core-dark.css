@@ -25290,6 +25290,7 @@ html:not(.layout-menu-fixed) .menu-inner-shadow {
 .layout-navbar .dropdown-menu .dropdown-item,
 .layout-navbar .dropdown-menu .dropdown-header {
   padding: 0.525rem 1rem;
+  
 }
 .layout-navbar .navbar-dropdown .badge-notifications {
   top: 0.5rem;
